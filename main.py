@@ -17,11 +17,11 @@
 # ----------------------------------------------------------------------------- #
 
 # Library imports
-from vex import *
+from vex import*
 
 # Brain should be defined by default
 brain=Brain()
-digin = DigitalIn(brain.three_wire_port.a)
+
 # Robot configuration code
 claw_motor = Motor(Ports.PORT3, GearSetting.RATIO_18_1, False)
 arm_motor = Motor(Ports.PORT8, GearSetting.RATIO_18_1, False)
