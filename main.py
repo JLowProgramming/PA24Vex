@@ -27,7 +27,7 @@ claw_motor = Motor(Ports.PORT3, GearSetting.RATIO_18_1, False)
 arm_motor = Motor(Ports.PORT8, GearSetting.RATIO_18_1, False)
 controller_1 = Controller(PRIMARY)
 left_motor = Motor(Ports.PORT1, GearSetting.RATIO_18_1, False)
-right_motor = Motor(Ports.PORT10, GearSetting.RATIO_18_1, True)
+right_motor = Motor(Ports.PORT10, GearSetting.RATIO_18_1, False)
 
 # Begin project code
 # Main Controller loop to set motors to controller axis postiions
