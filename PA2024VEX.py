@@ -53,10 +53,10 @@ from vex import *
 claw_open = False
 claw_pos_right = 0
 claw_pos_left = 0
-min_claw_pos_left = 0
+min_claw_pos_left = -90
 max_claw_pos_left = 90
 min_claw_pos_right = -90
-max_claw_pos_right = 0
+max_claw_pos_right = 90
 
 # Brain should be defined by default
 
@@ -64,9 +64,9 @@ brain=Brain()
 
 #Assigning motors to ports
 controller_1 = Controller(PRIMARY)
-left_motor = Motor55(Ports.PORT10, True)
-right_motor = Motor55(Ports.PORT20, True)
-arm_motor = Motor55(Ports.PORT1)
+left_motor = Motor55(Ports.PORT1, True)
+right_motor = Motor55(Ports.PORT11, True)
+arm_motor = Motor55(Ports.PORT10, False)
 right_servo = Servo(brain.three_wire_port.h)
 left_servo = Servo(brain.three_wire_port.a)
 
