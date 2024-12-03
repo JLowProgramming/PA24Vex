@@ -6,10 +6,6 @@ import urandom
 brain=Brain()
 
 # Robot configuration code
-mc55_10 = Motor55(Ports.PORT10, False)
-mc55_20 = Motor55(Ports.PORT20, False)
-servo_a = Servo(brain.three_wire_port.a)
-servo_h = Servo(brain.three_wire_port.h)
 
 
 # wait for rotation sensor to fully initialize
@@ -38,14 +34,15 @@ wait(200, MSEC)
 print("\033[2J")
 
 #endregion VEXcode Generated Robot Configuration
-# ---------------------------------------------------------------------------- #
-#                                                                              #
-# 	Module:       main.py                                                      #
-# 	Author:       sethe                                                        #
-# 	Created:      10/24/2024, 5:18:31 PM                                       #
-# 	Description:  V5 project                                                   #
-#                                                                              #
-# ---------------------------------------------------------------------------- #
+
+# ------------------------------------------
+# 
+# 	Project:      VEXcode Project
+#	Author:       VEX
+#	Created:
+#	Description:  VEXcode V5 Python Project
+# 
+# ------------------------------------------
 
 # Library imports
 from vex import *
@@ -53,10 +50,12 @@ from vex import *
 claw_open = False
 claw_pos_right = 0
 claw_pos_left = 0
-min_claw_pos_left = 0
+min_claw_pos_left = -90
 max_claw_pos_left = 90
 min_claw_pos_right = -90
-max_claw_pos_right = 0
+max_claw_pos_right = 90
+
+arm_sens = 70
 
 # Brain should be defined by default
 
@@ -64,9 +63,9 @@ brain=Brain()
 
 #Assigning motors to ports
 controller_1 = Controller(PRIMARY)
-left_motor = Motor55(Ports.PORT10, True)
-right_motor = Motor55(Ports.PORT20, True)
-arm_motor = Motor55(Ports.PORT1)
+left_motor = Motor55(Ports.PORT1, True)
+right_motor = Motor55(Ports.PORT11, True)
+arm_motor = Motor55(Ports.PORT10)
 right_servo = Servo(brain.three_wire_port.h)
 left_servo = Servo(brain.three_wire_port.a)
 
@@ -101,10 +100,21 @@ def open_claw():
         set_right_claw(claw_pos_right + 1)
         wait(.01, SECONDS)
 
+def arm_forward():
+    while controller_1.buttonR2.pressing():
+        arm_motor.set_velocity(arm_sens)
+    arm_motor.set_velocity(0)
+
+def arm_back():
+    while controller_1.buttonR1.pressing():
+        arm_motor.set_velocity(-arm_sens)
+    arm_motor.set_velocity(0)
+
 controller_1.buttonL2.pressed(close_claw)
 controller_1.buttonL1.pressed(open_claw)
+controller_1.buttonR2.pressed(arm_forward) 
+controller_1.buttonR1.pressed(arm_back)
 
 while True:
     left_motor.set_velocity(controller_1.axis4.position() + controller_1.axis3.position())
     right_motor.set_velocity(controller_1.axis4.position() - controller_1.axis3.position())
-    arm_motor.set_velocity(1 if controller_1.buttonR1.pressing() else (-1 if controller_1.button_R2.pressing() else 0))
